@@ -1,0 +1,193 @@
+<div class="card-page">
+
+  <div class="card-container">
+
+    <!-- CAROSELLO CARTE -->
+    <section class="dashboard-card carousel-section">
+
+      <div class="card-badge-title">
+        <div class="badge-icon purple">
+          <lucide-icon [img]="CreditCard" [size]="24" color="#ffffff"></lucide-icon>
+        </div>
+        <h3>Carte</h3>
+      </div>
+
+      <div class="carousel-content-wrapper">
+        <div class="carousel">
+
+          <button type="button" class="carousel-arrow" (click)="vaiCartaPrecedente()" aria-label="Carta precedente">
+            <lucide-icon [img]="ChevronLeft" [size]="20" [strokeWidth]="2"></lucide-icon>
+          </button>
+
+          <div class="carousel-viewport">
+            <div class="carousel-track" [style.transform]="'translateX(-' + (indiceCorrente * 100) + '%)'">
+
+              <div class="carousel-slide" *ngFor="let carta of carte">
+
+                <!-- Titolo sopra la carta -->
+                <div class="card-item-title">{{ carta.nome || 'Carta ' + carta.tipo }}</div>
+
+                <div class="card-scene" (click)="toggleFlip()">
+                  <div class="credit-card" [class.flipped]="cartaGirata && carta.id === cartaCorrente.id"
+                    [class.virtuale]="carta.id === 'virtuale'" [class.usa-e-getta]="carta.id === 'usa-e-getta'">
+
+                    <!-- FRONTE -->
+                    <div class="card-face card-front">
+
+                      <div class="digital-card-tipo" *ngIf="carta.tipo !== 'Fisica'">{{ carta.tipo }}</div>
+
+                      <div class="card-number">{{ carta.numeroMascherato }}</div>
+
+                      <div class="card-footer-row">
+                        <div class="card-holder">{{ carta.titolare }}</div>
+                        <div class="card-scadenza">{{ carta.scadenza }}</div>
+                      </div>
+
+                      <svg class="mastercard-logo" xmlns="http://www.w3.org/2000/svg" width="34" height="21"
+                        viewBox="0 0 34 21">
+                        <circle cx="12" cy="10.5" r="10" fill="#EB001B"></circle>
+                        <circle cx="22" cy="10.5" r="10" fill="#F79E1B" fill-opacity="0.85"></circle>
+                      </svg>
+
+                      <div class="tap-hint">Tocca per i dettagli</div>
+
+                    </div>
+
+                    <!-- RETRO (Senza CVV) -->
+                    <div class="card-face card-back">
+
+                      <div class="back-label">NUMERO CARTA</div>
+                      <div class="full-card-number">{{ carta.numeroCompleto }}</div>
+
+                      <div class="back-hint">Clicca per tornare al fronte</div>
+
+                      <svg class="mastercard-logo" xmlns="http://www.w3.org/2000/svg" width="34" height="21"
+                        viewBox="0 0 34 21">
+                        <circle cx="12" cy="10.5" r="10" fill="#EB001B"></circle>
+                        <circle cx="22" cy="10.5" r="10" fill="#F79E1B" fill-opacity="0.85"></circle>
+                      </svg>
+
+                    </div>
+
+                  </div>
+                </div>
+
+              </div>
+
+            </div>
+          </div>
+
+          <button type="button" class="carousel-arrow" (click)="vaiCartaSuccessiva()" aria-label="Carta successiva">
+            <lucide-icon [img]="ChevronRight" [size]="20" [strokeWidth]="2"></lucide-icon>
+          </button>
+
+        </div>
+
+        <div class="carousel-dots">
+          <button type="button" *ngFor="let carta of carte; let i = index" class="carousel-dot"
+            [class.active]="i === indiceCorrente" (click)="vaiACarta(i)"
+            [attr.aria-label]="'Vai a ' + carta.tipo"></button>
+        </div>
+      </div>
+
+      <!-- AZIONI PER LA CARTA CORRENTE -->
+      <div class="card-actions">
+
+        <!-- Il tasto Blocca ora è visibile sia per la carta Fisica sia per la Virtuale -->
+        <button *ngIf="cartaCorrente.tipo !== 'Usa e getta'" type="button" class="action-button block-button"
+          (click)="vaiAPin('blocca', cartaCorrente.id, $event)">
+          <lucide-icon [img]="Lock" [size]="18" [strokeWidth]="2"></lucide-icon>
+          <span>Blocca</span>
+        </button>
+
+        <button *ngIf="cartaCorrente.tipo !== 'Usa e getta'" type="button" class="action-button delete-button"
+          (click)="vaiAPin('elimina', cartaCorrente.id, $event)">
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
+            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M10 11v6"></path>
+            <path d="M14 11v6"></path>
+            <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"></path>
+            <path d="M3 6h18"></path>
+            <path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+          </svg>
+          <span>Elimina</span>
+        </button>
+
+        <button *ngIf="cartaCorrente.tipo === 'Usa e getta'" type="button" class="action-button regen-button"
+          (click)="rigeneraCartaUsaEGetta($event)">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M3 12a9 9 0 0 1 15-6.7L21 8"></path>
+            <path d="M21 3v5h-5"></path>
+            <path d="M21 12a9 9 0 0 1-15 6.7L3 16"></path>
+            <path d="M3 21v-5h5"></path>
+          </svg>
+          <span>Genera nuova carta</span>
+        </button>
+
+      </div>
+
+    </section>
+
+
+    <!-- INFORMAZIONI CARTA -->
+    <section class="dashboard-card details-section">
+
+      <div class="section-title">
+        <h3>Informazioni carta</h3>
+      </div>
+
+      <div class="details-list">
+
+        <div class="detail-row">
+          <div class="detail-label"><span>Titolare</span></div>
+          <strong>{{ cartaCorrente.titolare }}</strong>
+        </div>
+
+        <div class="detail-row">
+          <div class="detail-label"><span>Scadenza</span></div>
+          <strong>{{ cartaCorrente.scadenza }}</strong>
+        </div>
+
+        <div class="detail-row">
+          <div class="detail-label"><span>Tipologia</span></div>
+          <strong>{{ cartaCorrente.tipologia }}</strong>
+        </div>
+
+        <div class="detail-row">
+          <div class="detail-label"><span>CVV</span></div>
+          <div class="cvv-container">
+            <strong>•••</strong>
+            <button type="button" class="eye-button" (click)="vaiAPin('cvv', cartaCorrente.id, $event)"
+              title="Visualizza CVV (richiede password)" aria-label="Visualizza CVV">
+              <lucide-icon [img]="EyeOff" [size]="18" [strokeWidth]="2"></lucide-icon>
+            </button>
+          </div>
+        </div>
+
+        <div class="detail-row">
+          <div class="detail-label"><span>PIN</span></div>
+          <div class="cvv-container">
+            <strong>•••••</strong>
+            <!-- Apri la rotta inserisci-password per visualizzare il CVV o il PIN -->
+            <button type="button" class="eye-button" (click)="vaiAPassword(cartaCorrente.id, $event)"
+              title="Visualizza PIN (richiede password)" aria-label="Visualizza dettagli">
+              <lucide-icon [img]="EyeOff" [size]="18" [strokeWidth]="2"></lucide-icon>
+            </button>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="security-info">
+        Per visualizzare il <b>PIN</b> potrebbe essere richiesta la password; <b>blocco</b>, <b>eliminazione</b> e la visualizzazione del <b>CVV</b> richiedono sempre il PIN.
+      </div>
+
+    </section>
+
+  </div>
+
+</div>
+
+<!-- OVERLAY E MODALE -->
+<router-outlet></router-outlet>

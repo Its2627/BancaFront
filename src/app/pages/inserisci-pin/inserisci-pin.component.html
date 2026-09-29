@@ -1,0 +1,79 @@
+<div class="modal-backdrop" (click)="chiudi()"></div>
+
+<div class="card-modal">
+  <div class="pin-card-content">
+    <button type="button" class="close-btn" (click)="chiudi()" aria-label="Chiudi">&times;</button>
+
+    <!-- FASE 1: Inserimento PIN -->
+    <ng-container *ngIf="!completato">
+      <h2>
+        <ng-container [ngSwitch]="azione">
+          <span *ngSwitchCase="'blocca'">Blocca Carta</span>
+          <span *ngSwitchCase="'elimina'">Elimina Carta</span>
+          <span *ngSwitchDefault>Inserisci PIN Carta</span>
+        </ng-container>
+      </h2>
+
+      <p class="subtitle">
+        <ng-container [ngSwitch]="azione">
+          <span *ngSwitchCase="'blocca'">Inserisci il PIN di sicurezza per bloccare la carta.</span>
+          <span *ngSwitchCase="'elimina'">Inserisci il PIN per confermare l'eliminazione della carta.</span>
+          <span *ngSwitchDefault>Inserisci il PIN per visualizzare il CVV di sicurezza.</span>
+        </ng-container>
+      </p>
+
+      <form (ngSubmit)="confermaPin()">
+        <div class="pin-inputs">
+          <input
+            type="password"
+            maxlength="4"
+            [(ngModel)]="pin"
+            name="pin"
+            placeholder="••••"
+            required
+            autofocus
+          />
+        </div>
+
+        <div *ngIf="errore" class="error-msg">
+          {{ errore }}
+        </div>
+
+        <div class="actions">
+          <button type="button" class="btn-cancel" (click)="chiudi()">Annulla</button>
+          <button 
+            type="submit" 
+            class="btn-confirm" 
+            [class.btn-danger]="azione === 'elimina' || azione === 'blocca'"
+            [disabled]="loading || pin.length < 4"
+          >
+            {{ loading ? 'Operazione in corso...' : 'Conferma' }}
+          </button>
+        </div>
+      </form>
+    </ng-container>
+
+    <!-- FASE 2: Risultato/Conferma Operazione -->
+    <ng-container *ngIf="completato">
+
+      <!-- Caso CVV -->
+      <ng-container *ngIf="azione === 'cvv'">
+        <h2>Codice CVV</h2>
+        <p class="subtitle">Ecco il codice CVV della tua carta:</p>
+        <div class="cvv-display-box">
+          <span class="cvv-code">{{ cvvMostrato }}</span>
+        </div>
+      </ng-container>
+
+      <!-- Caso Blocca / Elimina -->
+      <ng-container *ngIf="azione !== 'cvv'">
+        <h2>Operazione Completata</h2>
+        <p class="subtitle">{{ messaggioSuccesso }}</p>
+      </ng-container>
+
+      <div class="actions">
+        <button type="button" class="btn-confirm" (click)="chiudi()">Chiudi</button>
+      </div>
+    </ng-container>
+  </div>
+</div>

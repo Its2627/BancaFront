@@ -1,0 +1,405 @@
+<!-- ===== CONTENITORE PRINCIPALE ===== -->
+
+<div class="transfer-grid">
+
+
+  <!-- ========================= -->
+  <!-- COLONNA SINISTRA -->
+  <!-- ========================= -->
+
+  <div class="col-left">
+
+
+    <!-- ========================= -->
+    <!-- CARD BONIFICO -->
+    <!-- ========================= -->
+
+    <form
+      class="card card-bonifico"
+      (ngSubmit)="transfer()">
+
+
+      <!-- ===== TITOLO ===== -->
+
+      <header class="card-head">
+
+        <span
+          class="icon-btn"
+          aria-hidden="true">
+
+          <lucide-icon
+            [img]="ArrowRightLeft"
+            [size]="22"
+            [strokeWidth]="2">
+          </lucide-icon>
+
+        </span>
+
+        <h2>Bonifico</h2>
+
+      </header>
+
+
+      <!-- ===== FORM ===== -->
+
+      <div class="form-box">
+
+        <div class="form-grid">
+
+
+          <!-- ===== IBAN ===== -->
+
+          <div class="field full">
+
+            <label for="iban">
+              IBAN Beneficiario
+            </label>
+
+            <input
+              type="text"
+              id="iban"
+              name="iban"
+              [(ngModel)]="iban"
+              placeholder="IT60 X054 2811 1010 0000 0123 456"
+              required>
+
+          </div>
+
+
+          <!-- ===== BENEFICIARIO ===== -->
+
+          <div class="field half">
+
+            <label for="beneficiario">
+              Beneficiario
+            </label>
+
+            <input
+              type="text"
+              id="beneficiario"
+              name="beneficiario"
+              [(ngModel)]="beneficiario"
+              class="center"
+              placeholder="Inserisci beneficiario"
+              required>
+
+          </div>
+
+
+          <!-- ===== IMPORTO ===== -->
+
+          <div class="field half">
+
+            <label for="amount">
+              Importo
+            </label>
+
+            <input
+              type="text"
+              id="amount"
+              name="amount"
+              [(ngModel)]="amount"
+              (blur)="formatAmount()"
+              placeholder="Inserisci importo"
+              required>
+
+          </div>
+
+
+          <!-- ===== CAUSALE ===== -->
+
+          <div class="field full">
+
+            <label for="causale">
+              Causale
+            </label>
+
+            <input
+              type="text"
+              id="causale"
+              name="causale"
+              [(ngModel)]="causale"
+              placeholder="Inserisci la causale">
+
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <!-- ========================= -->
+      <!-- MESSAGGIO -->
+      <!-- ========================= -->
+
+      @if (message) {
+
+        <p
+          class="message"
+          [class.success]="success"
+          [class.error]="!success">
+
+          {{ message }}
+
+        </p>
+
+      }
+
+
+      <!-- ========================= -->
+      <!-- BOTTONE -->
+      <!-- ========================= -->
+
+      <div class="form-actions">
+
+        <button
+          type="submit"
+          class="btn-esegui">
+
+          ESEGUI
+
+        </button>
+
+      </div>
+
+    </form>
+
+
+    <!-- ========================= -->
+    <!-- CARD SALDO -->
+    <!-- ========================= -->
+
+    <section class="card card-saldo">
+
+
+      <!-- ===== SALDO ===== -->
+
+      <div class="saldo-block">
+
+        <h3 class="block-title">
+          Saldo
+        </h3>
+
+
+        <div class="calc">
+
+          <p class="calc-current">
+            €&nbsp;19.920.000
+          </p>
+
+          <p class="calc-sub">
+            −&nbsp;€&nbsp;920.000
+          </p>
+
+          <div class="calc-divider"></div>
+
+          <hr>
+
+          <p class="calc-total">
+            €&nbsp;19.000.000
+          </p>
+
+        </div>
+
+      </div>
+
+
+      <!-- ===== ANTEPRIMA ===== -->
+
+      <div class="anteprima-block">
+
+        <h3 class="block-title">
+          Anteprima
+        </h3>
+
+
+        <!-- ===== LEGENDA ===== -->
+
+        <div class="legend">
+
+          <div class="legend-item">
+
+            <span class="dot violet"></span>
+
+            <span>
+              Saldo Rimanente
+            </span>
+
+          </div>
+
+
+          <div class="legend-item">
+
+            <span class="dot pink"></span>
+
+            <span>
+              Saldo Attuale
+            </span>
+
+          </div>
+
+        </div>
+
+
+        <!-- ===== BARRA VUOTA ===== -->
+
+        <div class="progress">
+
+          <span class="band violet"></span>
+
+          <span class="band pink"></span>
+
+        </div>
+
+      </div>
+
+    </section>
+
+  </div>
+
+
+  <!-- ========================= -->
+  <!-- COLONNA DESTRA -->
+  <!-- ========================= -->
+
+  <div class="col-right">
+
+
+    <!-- ========================= -->
+    <!-- RUBRICA -->
+    <!-- ========================= -->
+
+    <section class="card card-rubrica">
+
+      <h3 class="block-title">
+        Rubrica
+      </h3>
+
+
+      <table class="rubrica-table">
+
+        <thead>
+
+          <tr>
+
+            <th>
+              Nome
+            </th>
+
+            <th style="text-align: right;">
+              IBAN
+            </th>
+
+          </tr>
+
+        </thead>
+
+
+        <tbody>
+
+          @for (
+            contatto of rubrica;
+            track contatto.iban
+          ) {
+
+            <tr
+              (click)="selezionaContatto(contatto)"
+              style="cursor: pointer;">
+
+              <td>
+                {{ contatto.nome }}
+              </td>
+
+              <td class="iban">
+                {{ contatto.iban }}
+              </td>
+
+            </tr>
+
+          }
+
+        </tbody>
+
+      </table>
+
+    </section>
+
+
+    <!-- ========================= -->
+    <!-- ULTIMI BONIFICI -->
+    <!-- ========================= -->
+
+    <section class="card card-ultimi">
+
+      <h3 class="block-title">
+        Ultimi Bonifici
+      </h3>
+
+
+      <ul class="transfers-list">
+
+
+        <!-- ===== BONIFICO RICEVUTO ===== -->
+
+        <li class="transfer-item">
+
+          <span
+            class="transfer-icon received"
+            aria-hidden="true">
+
+            <lucide-icon
+              [img]="ArrowDown"
+              [size]="18"
+              [strokeWidth]="2">
+            </lucide-icon>
+
+          </span>
+
+
+          <span class="transfer-name">
+            Mario Rossi
+          </span>
+
+
+          <span class="transfer-amount positive">
+            + € 1.250,00
+          </span>
+
+        </li>
+
+
+        <!-- ===== BONIFICO INVIATO ===== -->
+
+        <li class="transfer-item">
+
+          <span
+            class="transfer-icon sent"
+            aria-hidden="true">
+
+            <lucide-icon
+              [img]="ArrowUp"
+              [size]="18"
+              [strokeWidth]="2">
+            </lucide-icon>
+
+          </span>
+
+
+          <span class="transfer-name">
+            Giulia Bianchi
+          </span>
+
+
+          <span class="transfer-amount negative">
+            − € 480,00
+          </span>
+
+        </li>
+
+      </ul>
+
+    </section>
+
+  </div>
+
+</div>

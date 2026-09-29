@@ -1,0 +1,332 @@
+.page {
+  padding: 0;
+  font-family: 'Gabarito', sans-serif;
+  box-sizing: border-box;
+}
+
+.search-card {
+  background: #ffffff;
+  border-radius: 20px;
+  box-shadow: 0 8px 24px rgba(15, 23, 42, 0.06);
+  padding: 2rem 2.5rem;
+  width: 100%;
+  box-sizing: border-box;
+  height: 100%;
+}
+
+.card-header-title {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 1.75rem;
+}
+
+.badge-icon.purple {
+  background-color: #8b5cf6;
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.badge-icon lucide-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 0;
+}
+
+.form-title {
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: #1e293b;
+  margin-bottom: 25px;
+  margin-top: 0;
+}
+
+/* Filtri combinabili: numero, categoria, data inizio, data fine */
+.filters {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 1.25rem;
+  margin-bottom: 1.5rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-label {
+  font-size: 0.8rem;
+  color: #475569;
+  margin-bottom: 0.35rem;
+  font-weight: 500;
+}
+
+.form-control {
+  padding: 0.55rem 0.8rem;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  font-size: 0.85rem;
+  font-family: inherit;
+  outline: none;
+  background: #ffffff;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.form-control:focus {
+  border-color: #7b2cbf;
+  box-shadow: 0 0 0 3px rgba(123, 44, 191, 0.1);
+}
+
+/* Messaggi di stato */
+.text-danger {
+  color: #ef4444;
+  font-size: 0.8rem;
+  margin-bottom: 1rem;
+  padding: 0.55rem 0.75rem;
+  background: #fef2f2;
+  border-radius: 8px;
+}
+
+.balance {
+  font-size: 0.95rem;
+  color: #1e293b;
+  background: #f7f0fb;
+  border: 1px solid #ecd9f7;
+  padding: 0.6rem 1rem;
+  border-radius: 10px;
+  margin-bottom: 1.25rem;
+}
+
+.balance strong {
+  color: #7b2cbf;
+}
+
+.loading,
+.no-results {
+  text-align: center;
+  color: #94a3b8;
+  font-size: 0.9rem;
+  padding: 2rem 0;
+}
+
+.results-area {
+  min-height: 220px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+/* ==========================================
+   DROPDOWN CUSTOM (SOSTITUISCE IL SELECT NATIVO)
+   ========================================== */
+.custom-select-wrapper {
+  position: relative;
+  width: 100%;
+  user-select: none;
+}
+
+/* Campo visibile del select */
+.custom-select-trigger {
+  width: 100%;
+  height: 38px;
+  padding: 0 0.8rem;
+  font-size: 0.85rem;
+  background-color: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+  box-sizing: border-box;
+  color: #475569;
+  transition: all 0.2s ease;
+}
+
+.custom-select-trigger .placeholder {
+  color: #94a3b8;
+}
+
+.custom-select-wrapper:hover .custom-select-trigger {
+  background-color: #f8fafc;
+}
+
+/* Stato aperto / Focus del menu */
+.custom-select-wrapper.open .custom-select-trigger {
+  background-color: #ffffff;
+  border-color: #8b5cf6;
+  box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.15);
+}
+
+/* Rotazione icona alla chiusura/apertura */
+.custom-select-wrapper .select-icon {
+  transition: transform 0.2s ease;
+}
+
+.custom-select-wrapper.open .select-icon {
+  transform: rotate(180deg);
+}
+
+/* Tendina a comparsa con bordi arrotondati */
+.custom-options {
+  position: absolute;
+  top: calc(100% + 6px);
+  left: 0;
+  right: 0;
+  background-color: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.05);
+  border: 1px solid #f1f5f9;
+  padding: 0.4rem;
+  z-index: 50;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  max-height: 220px;
+  overflow-y: auto;
+}
+
+/* Voci interne della lista */
+.custom-option {
+  padding: 0.55rem 0.75rem;
+  font-size: 0.85rem;
+  color: #334155;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.15s ease, color 0.15s ease;
+}
+
+.custom-option:hover {
+  background-color: #f1f5f9;
+  color: #8b5cf6;
+}
+
+.custom-option.selected {
+  background-color: #f3e8ff;
+  color: #7c3aed;
+  font-weight: 600;
+}
+
+/* Tabella */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 1.5rem;
+}
+
+thead th {
+  text-align: left;
+  font-size: 0.78rem;
+  color: #475569;
+  font-weight: 600;
+  padding: 0.75rem 0.5rem;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+tbody td {
+  padding: 0.85rem 0.5rem;
+  font-size: 0.85rem;
+  color: #334155;
+  border-bottom: 1px solid #f1f5f9;
+}
+
+tbody tr:hover {
+  background: #faf7fc;
+}
+
+td.negative {
+  color: #ef4444;
+  font-weight: 600;
+}
+
+td.positive {
+  color: #7b2cbf;
+  font-weight: 600;
+}
+
+/* Azioni + dropdown Esporta */
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.export-dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.btn-submit {
+  padding: 0.65rem 1.4rem;
+  background: linear-gradient(90deg, #822FAF 0%, #973AA8 100%);
+  color: #ffffff;
+  border: none;
+  border-radius: 20px;
+  font-weight: 600;
+  font-size: 0.85rem;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(216, 92, 138, 0.25);
+  transition: opacity 0.2s ease, transform 0.15s ease;
+  font-family: inherit;
+}
+
+.btn-submit:hover:not(:disabled) {
+  opacity: 0.95;
+  transform: translateY(-1px);
+}
+
+.btn-submit:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+.export-menu {
+  position: absolute;
+  bottom: calc(100% + 0.5rem);
+  right: 0;
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  box-shadow: 0 8px 24px rgba(15, 23, 42, 0.1);
+  padding: 0.4rem;
+  display: flex;
+  flex-direction: column;
+  min-width: 170px;
+  z-index: 10;
+}
+
+.export-menu-item {
+  background: none;
+  border: none;
+  text-align: left;
+  padding: 0.6rem 0.8rem;
+  font-size: 0.85rem;
+  font-family: inherit;
+  color: #334155;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.15s ease, color 0.15s ease;
+}
+
+.export-menu-item:hover {
+  background-color: #f7f0fb;
+  color: #7b2cbf;
+}
+
+/* Responsive */
+@media (max-width: 640px) {
+  .page {
+    padding: 1rem;
+  }
+  .search-card {
+    padding: 1.25rem;
+  }
+}

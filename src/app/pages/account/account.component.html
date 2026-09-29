@@ -1,0 +1,51 @@
+<section class="profile-card">
+  <h2>Profilo</h2>
+
+  @if (loading()) {
+    <p class="state">Caricamento in corso...</p>
+  } @else if (error()) {
+    <p class="state state-error">Si è verificato un errore durante il caricamento del profilo.</p>
+  } @else if (profile(); as p) {
+    <div class="profile-header">
+      <img src="https://picsum.photos/100/100" alt="Avatar" class="avatar">
+      <div class="profile-header-info">
+        <div class="full-name">{{ nome() }} {{ cognome() }}</div>
+        <div class="email">{{ p.email }}</div>
+      </div>
+    </div>
+
+    <dl class="profile-grid">
+      <div class="field">
+        <dt>ID conto corrente</dt>
+        <dd>{{ p.contoCorrenteId }}</dd>
+      </div>
+      <div class="field">
+        <dt>Email</dt>
+        <dd>{{ p.email }}</dd>
+      </div>
+      <div class="field">
+        <dt>Cognome</dt>
+        <dd>{{ cognome() }}</dd>
+      </div>
+      <div class="field">
+        <dt>Nome</dt>
+        <dd>{{ nome() }}</dd>
+      </div>
+      <div class="field">
+        <dt>Data apertura</dt>
+        <dd>{{ p.dataApertura | date: 'dd/MM/yyyy' }}</dd>
+      </div>
+      <div class="field">
+        <dt>IBAN</dt>
+        <dd>{{ p.iban ?? 'Non ancora assegnato' }}</dd>
+      </div>
+    </dl>
+
+    <div class="profile-actions">
+      <a routerLink="/home/account/change-password" class="btn-change-password">Modifica password</a>
+    </div>
+  }
+</section>
+
+<!-- Qui si apre la modale "Modifica password" -->
+<router-outlet></router-outlet>

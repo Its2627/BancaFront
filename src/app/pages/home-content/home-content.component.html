@@ -1,0 +1,134 @@
+<div class="dashboard-grid">
+
+  <!-- 1. ISLAND SUPERIORE: SALDO E CARTE -->
+  <section class="dashboard-card island-top">
+
+    <div class="saldo-section">
+      <div class="card-badge-title">
+        <div class="badge-icon purple">
+          <lucide-icon [img]="Landmark" [size]="16" color="#ffffff"></lucide-icon>
+        </div>
+        <h3>Saldo Totale</h3>
+      </div>
+      <div class="saldo-value">
+        € {{ saldoTotale | number:'1.2-2':'it' }}
+      </div>
+    </div>
+
+    <div class="carte-section">
+      <div class="card-badge-title">
+        <div class="badge-icon purple">
+          <lucide-icon [img]="CreditCard" [size]="16" color="#ffffff"></lucide-icon>
+        </div>
+        <h3>Carte</h3>
+      </div>
+      <div class="cards-preview">
+        <div class="credit-card">
+          <div class="card-number">5260 0123 4567 8901</div>
+          <div class="card-holder">ANDHIKA PUTRA</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- RIGA INFERIORE CON LE ALTRE 2 ISLAND -->
+  <div class="bottom-row">
+
+    <!-- 2. ISLAND PAGAMENTI -->
+    <section class="dashboard-card island-pagamenti">
+      <div class="card-badge-title">
+        <div class="badge-icon purple">
+          <lucide-icon [img]="ChartColumn" [size]="16" color="#ffffff"></lucide-icon>
+        </div>
+        <h3>Analytics</h3>
+      </div>
+    </section>
+
+    <!-- 3. ISLAND ULTIMI MOVIMENTI -->
+    <section class="dashboard-card island-movimenti">
+
+      <div class="card-badge-title">
+        <div class="badge-icon purple">
+          <lucide-icon [img]="ReceiptText" [size]="16" color="#ffffff"></lucide-icon>
+        </div>
+        <h3>Ultimi movimenti</h3>
+      </div>
+
+      <div class="table-container">
+        <table class="movimenti-table">
+          <thead>
+            <tr>
+              <th>Categoria</th>
+              <th>Importo</th>
+              <th>Tipologia</th>
+              <th>Dettaglio</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let m of ultimiMovimenti">
+              <td class="nome-col">{{ m.nomeCategoria }}</td>
+              <td class="quantita-col" [class.positive]="m.importo > 0">
+                {{ m.importo > 0 ? '+' : '' }}€ {{ m.importo | number:'1.2-2':'it' }}
+              </td>
+              <td class="stato-col">
+                <span class="status-badge">{{ m.tipologiaCategoria }}</span>
+              </td>
+              <td class="dettaglio-col">
+                <button class="dettaglio-btn" (click)="apriDettaglio(m)">
+                  Dettagli
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- POPUP DI DETTAGLIO: sempre posizionato sopra questa island -->
+      <div
+        class="dettaglio-overlay"
+        *ngIf="movimentoSelezionato"
+        (click)="chiudiDettaglio()">
+
+        <div class="dettaglio-card" (click)="stopPropagation($event)">
+          <div class="dettaglio-header">
+            <h3>Dettaglio movimento</h3>
+            <button class="close-btn" (click)="chiudiDettaglio()">
+              <lucide-icon [img]="X" [size]="18" color="#64748b"></lucide-icon>
+            </button>
+          </div>
+
+          <div class="dettaglio-body">
+            <div class="dettaglio-row">
+              <span class="dettaglio-label">Data</span>
+              <span class="dettaglio-value">{{ movimentoSelezionato.data | date:'dd/MM/yyyy' }}</span>
+            </div>
+            <div class="dettaglio-row">
+              <span class="dettaglio-label">Categoria</span>
+              <span class="dettaglio-value">
+                {{ movimentoSelezionato.nomeCategoria }} ({{ movimentoSelezionato.tipologiaCategoria }})
+              </span>
+            </div>
+            <div class="dettaglio-row">
+              <span class="dettaglio-label">Importo</span>
+              <span
+                class="dettaglio-value quantita"
+                [class.positive]="movimentoSelezionato.importo > 0">
+                {{ movimentoSelezionato.importo > 0 ? '+' : '' }}€ {{ movimentoSelezionato.importo | number:'1.2-2':'it' }}
+              </span>
+            </div>
+            <div class="dettaglio-row">
+              <span class="dettaglio-label">Saldo dopo l'operazione</span>
+              <span class="dettaglio-value">€ {{ movimentoSelezionato.saldo | number:'1.2-2':'it' }}</span>
+            </div>
+            <div class="dettaglio-row">
+              <span class="dettaglio-label">Descrizione</span>
+              <span class="dettaglio-value">{{ movimentoSelezionato.descrizioneEstesa }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+</div>

@@ -1,0 +1,322 @@
+:host {
+  display: block;
+  width: 100%;
+}
+
+/* CONTAINER PRINCIPALE DELLE 3 ISLANDS */
+.dashboard-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 1.75rem;
+  width: 100%;
+}
+
+/* STILE BASE COMUNE A OGNI ISLAND (CARD) */
+.dashboard-card {
+  background-color: #ffffff;
+  border-radius: 20px;
+  padding: 1.75rem 2rem;
+  box-shadow: 0 8px 24px rgba(15, 23, 42, 0.06);
+  position: relative;
+  box-sizing: border-box;
+}
+
+/* TITOLO E ICONA PER OGNI ISLAND */
+.card-badge-title {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 1.25rem;
+}
+
+.card-badge-title h3 {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #1e293b;
+  margin: 0;
+}
+
+.badge-icon.purple {
+  background-image: linear-gradient(270deg, #822FAF, #973AA8);
+  width: 28px;
+  height: 28px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2px 0 -2px 0;
+}
+
+/* ==========================================================================
+   1. ISLAND SUPERIORE (SALDO TOTALE E CARTE)
+   ========================================================================== */
+.island-top {
+  display: flex;
+  justify-content: space-between;
+  min-height: 200px;
+  gap: 2rem;
+}
+
+.saldo-section {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.saldo-value {
+  font-size: 2.25rem;
+  font-weight: 800;
+  color: #0f172a;
+}
+
+.carte-section {
+  flex: 1.2;
+  display: flex;
+  flex-direction: column;
+}
+
+.cards-preview {
+  display: flex;
+  justify-content: flex-start;
+  cursor: pointer;
+}
+
+.credit-card {
+  width: 280px;
+  height: 150px;
+  background: linear-gradient(135deg, #1e293b, #0f172a);
+  border-radius: 16px;
+  padding: 1.25rem;
+  color: #ffffff;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.card-number {
+  font-family: monospace;
+  font-size: 1.1rem;
+  letter-spacing: 2px;
+}
+
+.card-holder {
+  font-size: 0.75rem;
+  opacity: 0.8;
+  text-transform: uppercase;
+}
+
+/* ==========================================================================
+   LAYOUT RIGA INFERIORE (ISLAND 2 E ISLAND 3)
+   ========================================================================== */
+.bottom-row {
+  display: grid;
+  grid-template-columns: 1fr 1.2fr;
+  gap: 1.75rem;
+  width: 100%;
+}
+
+/* ==========================================================================
+   2. ISLAND PAGAMENTI (SOTTO A SINISTRA)
+   ========================================================================== */
+.island-pagamenti {
+  display: flex;
+  flex-direction: column;
+}
+
+.quick-actions {
+  display: flex;
+  gap: 1.5rem;
+  margin-top: 0.5rem;
+}
+
+.action-card {
+  background: none;
+  border: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+  cursor: pointer;
+  padding: 0;
+}
+
+.action-box {
+  width: 110px;
+  height: 110px;
+  border: 1.5px solid #e2e8f0;
+  border-radius: 20px;
+  background-color: #fafafa;
+  transition: all 0.2s ease;
+}
+
+.action-card:hover .action-box {
+  border-color: #8b5cf6;
+  background-color: #f5f3ff;
+}
+
+.action-card span {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #334155;
+}
+
+/* ==========================================================================
+   3. ISLAND ULTIMI MOVIMENTI (SOTTO A DESTRA)
+   ========================================================================== */
+.island-movimenti {
+  display: flex;
+  flex-direction: column;
+  min-height: 300px;
+  position: relative; /* ancora il popup a questa island */
+}
+
+.table-container {
+  overflow-x: auto;
+  margin-top: 0.5rem;
+}
+
+.movimenti-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.875rem;
+}
+
+.movimenti-table th {
+  text-align: left;
+  color: #64748b;
+  font-weight: 600;
+  padding: 0.75rem 0.5rem;
+}
+
+.movimenti-table td {
+  padding: 0.85rem 0.5rem;
+  border-top: 1px solid #f1f5f9;
+  color: #1e293b;
+}
+
+.quantita-col {
+  font-weight: 600;
+  color: #0f172a;
+}
+
+.quantita-col.positive {
+  color: #16a34a;
+}
+
+.status-badge {
+  display: inline-block;
+  padding: 0.25rem 0.75rem;
+  border: 1px solid #cbd5e1;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  color: #475569;
+}
+
+/* ==========================================================================
+   PULSANTE DETTAGLIO NELLA TABELLA
+   ========================================================================== */
+.dettaglio-col {
+  text-align: left;
+}
+
+.dettaglio-btn {
+  background-color: #f5f3ff;
+  border: 1px solid #ddd6fe;
+  color: #822FAF;
+  font-size: 0.8rem;
+  font-weight: 600;
+  padding: 0.4rem 0.9rem;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.dettaglio-btn:hover {
+  background-color: #822FAF;
+  color: #ffffff;
+  border-color: #822FAF;
+}
+
+/* ==========================================================================
+   POPUP DI DETTAGLIO
+   ========================================================================== */
+.dettaglio-overlay {
+  position: absolute;
+  inset: 0;
+  backdrop-filter: blur(4px);
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+}
+
+.dettaglio-card {
+  background-color: #ffffff;
+  border-radius: 16px;
+  width: 90%;
+  max-width: 360px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  padding: 1.5rem;
+  box-sizing: border-box;
+}
+
+.dettaglio-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+}
+
+.dettaglio-header h3 {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #1e293b;
+  margin: 0;
+}
+
+.close-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  padding: 0.25rem;
+  border-radius: 8px;
+  transition: background-color 0.2s ease;
+}
+
+.close-btn:hover {
+  background-color: #f1f5f9;
+}
+
+.dettaglio-body {
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+}
+
+.dettaglio-row {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.dettaglio-label {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #64748b;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+.dettaglio-value {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #0f172a;
+}
+
+.dettaglio-value.quantita.positive {
+  color: #16a34a;
+}
