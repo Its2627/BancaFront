@@ -6,6 +6,7 @@ import bodyParser from 'body-parser';
 import apiRouter from './api/routes';
 import './lib/auth/auth-handlers';
 import { errorHandlers } from './errors';
+import { connectDb } from './lib/db';
 
 const app = express();
 
@@ -27,13 +28,25 @@ const health = async (_req: express.Request, res: express.Response) => {
     };
 
     try {
-        await mongoose.connection.db?.admin().command({ ping: 1 });
-        info.ping = 'ok';
+        await connectDb();
+        info.connessioneDopoTentativo = mongoose.connection.readyState;
+        info.database = mongoose.connection.name ?? null;
+
+        const db = mongoose.connection.db;
+        if (!db) {
+            info.ping = 'nessuna connessione';
+        } else {
+            await db.admin().command({ ping: 1 });
+            info.ping = 'ok';
+            info.collezioni = (await db.listCollections().toArray()).length;
+        }
     } catch (err) {
         info.ping = 'fallito';
         info.errore = (err as Error).message;
+        info.erroreTipo = (err as Error).name;
     }
 
+    res.set('Cache-Control', 'no-store');
     res.json(info);
 };
 
