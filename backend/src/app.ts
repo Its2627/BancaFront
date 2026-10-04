@@ -13,9 +13,12 @@ app.use(cors());
 app.use(morgan('tiny'));
 app.use(bodyParser.json());
 
-app.get('/', (_req, res) => {
+const health = (_req: express.Request, res: express.Response) => {
     res.json({ status: 'ok', api: '/api' });
-});
+};
+
+app.get('/', health);
+app.get('/api/health', health);
 
 app.use('/api', apiRouter);
 app.use(errorHandlers);

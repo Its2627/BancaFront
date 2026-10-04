@@ -5,7 +5,7 @@
   "rewrites": [
     {
       "source": "/api/:path*",
-      "destination": "https://banca-be.vercel.app/api/:path*"
+      "destination": "https://banca-backend.vercel.app/api/:path*"
     },
     {
       "source": "/(.*)",
