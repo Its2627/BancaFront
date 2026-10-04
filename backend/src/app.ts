@@ -53,6 +53,15 @@ const health = async (_req: express.Request, res: express.Response) => {
 app.get('/', health);
 app.get('/api/health', health);
 
+app.use(async (_req, _res, next) => {
+    try {
+        await connectDb();
+        next();
+    } catch (err) {
+        next(err);
+    }
+});
+
 app.use('/api', apiRouter);
 app.use(errorHandlers);
 
