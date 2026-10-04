@@ -24,7 +24,9 @@ const health = async (_req: express.Request, res: express.Response) => {
         uriImpostata: Boolean(uri),
         uriDestinazione: uri ? uri.replace(/^.*@/, '').split('?')[0] : null,
         database: mongoose.connection.name ?? null,
-        connessione: mongoose.connection.readyState
+        connessione: mongoose.connection.readyState,
+        backendUrl: process.env.BACKEND_URL ?? null,
+        frontendUrl: process.env.FRONTEND_URL ?? null
     };
 
     try {
