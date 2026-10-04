@@ -1,4 +1,5 @@
 import express from 'express';
+import mongoose from 'mongoose';
 import morgan from 'morgan';
 import cors from 'cors';
 import bodyParser from 'body-parser';
@@ -14,7 +15,13 @@ app.use(morgan('tiny'));
 app.use(bodyParser.json());
 
 const health = (_req: express.Request, res: express.Response) => {
-    res.json({ status: 'ok', api: '/api' });
+    res.json({
+        status: 'ok',
+        api: '/api',
+        commit: process.env.VERCEL_GIT_COMMIT_SHA?.slice(0, 7) ?? 'locale',
+        database: mongoose.connection.name ?? null,
+        connessione: mongoose.connection.readyState
+    });
 };
 
 app.get('/', health);
