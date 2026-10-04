@@ -2,6 +2,7 @@ import { inject, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { combineLatest, map, Observable, shareReplay } from 'rxjs';
 import { ApiBankAccount, ApiUser } from './api.model';
+import { Cached } from './cache';
 
 export interface Profile {
   contoCorrenteId: string;
@@ -19,12 +20,20 @@ export interface Profile {
 export class AccountService {
   private http = inject(HttpClient);
 
+  private readonly userCache = new Cached<ApiUser>();
+  private readonly accountCache = new Cached<ApiBankAccount>();
+
+  invalidate(): void {
+    this.userCache.clear();
+    this.accountCache.clear();
+  }
+
   getUser(): Observable<ApiUser> {
-    return this.http.get<ApiUser>('/api/users/me');
+    return this.userCache.get(() => this.http.get<ApiUser>('/api/users/me'));
   }
 
     getBankAccount(): Observable<ApiBankAccount> {
-    return this.http.get<ApiBankAccount>('/api/accounts/me');
+    return this.accountCache.get(() => this.http.get<ApiBankAccount>('/api/accounts/me'));
   }
 
   getProfile(): Observable<Profile> {

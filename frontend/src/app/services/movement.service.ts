@@ -3,6 +3,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { combineLatest, map, Observable, of, shareReplay, switchMap } from 'rxjs';
 import { ApiPaginated, ApiTransaction, ApiTransactionCategory } from './api.model';
 import { AccountService } from './account.service';
+import { Cached } from './cache';
 
 export interface Movement {
   id: string;
@@ -68,12 +69,27 @@ export class MovementService {
     return this.http.get<ApiTransaction>(`${this.baseUrl}/${id}`);
   }
 
-    getLastMovements(n: number): Observable<SearchResultWithBalance> {
-    const params = new HttpParams().set('limit', n).set('page', 1);
+  private readonly lastMovements = new Map<number, Cached<SearchResultWithBalance>>();
 
-    return combineLatest([this.query(params), this.accountSrv.getBalance()]).pipe(
-      map(([movements, finalBalance]) => ({ movements, finalBalance }))
-    );
+  invalidate(): void {
+    this.lastMovements.forEach(cache => cache.clear());
+  }
+
+  getLastMovements(n: number): Observable<SearchResultWithBalance> {
+    let cache = this.lastMovements.get(n);
+
+    if (!cache) {
+      cache = new Cached<SearchResultWithBalance>();
+      this.lastMovements.set(n, cache);
+    }
+
+    return cache.get(() => {
+      const params = new HttpParams().set('limit', n).set('page', 1);
+
+      return combineLatest([this.query(params), this.accountSrv.getBalance()]).pipe(
+        map(([movements, finalBalance]) => ({ movements, finalBalance }))
+      );
+    });
   }
 
     getMovementsByCategory(n: number, category: string): Observable<Movement[]> {
