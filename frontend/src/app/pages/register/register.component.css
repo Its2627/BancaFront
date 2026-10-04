@@ -198,3 +198,10 @@
   font-size: 0.8rem;
   color: #16a34a;
 }
+
+@media (max-width: 480px) {
+  .form-row {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+}

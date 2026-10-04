@@ -109,3 +109,9 @@ h2 {
     text-align: center;
   }
 }
+
+@media (max-width: 640px) {
+  .profile-grid {
+    gap: 0.9rem;
+  }
+}

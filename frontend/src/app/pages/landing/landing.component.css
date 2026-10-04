@@ -198,3 +198,40 @@
   z-index: 1000;
   box-sizing: border-box;
 }
+
+@media (max-width: 900px) {
+  .hero {
+    padding: 2rem 1.5rem;
+    height: auto;
+    min-height: 260px;
+  }
+
+  .hero-content {
+    max-width: 100%;
+  }
+
+  .hero-title {
+    font-size: 2rem;
+  }
+}
+
+@media (max-width: 640px) {
+  .hero {
+    padding: 1.75rem 1rem;
+  }
+
+  .hero-title {
+    font-size: 1.6rem;
+  }
+
+  .hero-subtitle {
+    font-size: 1rem;
+  }
+
+  .login-modal {
+    width: calc(100% - 1.5rem);
+    padding: 1.75rem 1.25rem;
+    max-height: 90vh;
+    overflow-y: auto;
+  }
+}
