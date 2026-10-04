@@ -24,8 +24,19 @@ const init = (): Promise<void> => {
 
     if (!ready) {
         ready = connectDb()
+            .then(async () => {
+                if (mongoose.connection.readyState !== CONNECTED) {
+                    await mongoose.connection.asPromise();
+                }
+            })
             .then(() => seedTransactionCategories())
-            .then(() => undefined)
+            .then(() => {
+                if (mongoose.connection.readyState !== CONNECTED) {
+                    throw new Error(
+                        `connessione non stabilita: readyState ${mongoose.connection.readyState}`
+                    );
+                }
+            })
             .catch(err => {
                 ready = null;
                 throw err;
