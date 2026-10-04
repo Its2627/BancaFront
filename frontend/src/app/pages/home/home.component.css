@@ -1,0 +1,407 @@
+:host {
+  display: block;
+  width: 100vw;
+  height: 100vh;
+  font-family: 'Gabarito', sans-serif;
+  background-color: #f8fafc;
+}
+
+.dashboard-layout {
+  display: flex;
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+}
+
+/* SIDEBAR STYLES */
+.sidebar {
+  width: 250px;
+  background-color: #ffffff;
+  border-right: 1px solid #f1f5f9;
+  display: flex;
+  flex-direction: column;
+  padding: 1.5rem 1.25rem;
+  box-sizing: border-box;
+  justify-content: space-between;
+}
+
+.logoMenu {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  margin-bottom: 2.5rem;
+  padding-left: 0.5rem;
+  justify-content: flex-start;
+}
+
+.sidebar-logo {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  margin-bottom: 2.5rem;
+  padding-left: 0.5rem;
+}
+
+.logo-icon {
+  width: 28px;
+  height: 28px;
+}
+
+.logo-text {
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: #7b2cbf;
+  letter-spacing: -0.5px;
+}
+
+.menu-section {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 2rem;
+}
+
+.menu-label {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: #94a3b8;
+  letter-spacing: 0.5px;
+  margin-bottom: 0.75rem;
+  padding-left: 0.75rem;
+}
+
+.nav-links {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.nav-item {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  padding: 0.75rem 0.85rem;
+  border-radius: 12px;
+  color: #64748b;
+  text-decoration: none;
+  font-size: 0.9rem;
+  font-weight: 500;
+  transition: all 0.2s ease;
+}
+
+.nav-item:hover {
+  background-color: #b158ff3b;
+  color: #1e293b;
+}
+
+/* STATO ATTIVO */
+.nav-item.active {
+  background-image: linear-gradient(270deg, #822FAF, #973AA8);
+  color: #ffffff !important;
+}
+
+/* Penetriamo nell'SVG del componente Lucide per forzare il colore bianco */
+.nav-item.active ::ng-deep lucide-icon,
+.nav-item.active ::ng-deep lucide-icon svg,
+.nav-item.active ::ng-deep lucide-icon svg * {
+  color: #ffffff !important;
+  stroke: #ffffff !important;
+}
+
+.logout-link {
+  color: #dc2626;
+}
+
+.logout-link:hover {
+  background-color: #fef2f2;
+  color: #dc2626;
+}
+
+.account-section {
+  margin-bottom: 0;
+}
+
+/* MAIN CONTENT WRAPPER */
+.main-wrapper {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+}
+
+/* TOP HEADER VIOLA */
+.top-header {
+  background: linear-gradient(270deg, #822FAF, #973AA8);
+  color: #ffffff;
+  padding: 1.75rem 2.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* ============================================
+   TITOLO DI BENVENUTO ANIMATO
+   ============================================ */
+.header-titles {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.4rem;
+}
+
+/* Etichetta a pillola con puntino pulsante */
+.header-titles .welcome-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.25rem 0.8rem;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.18);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  animation: fadeUp 0.6s ease both;
+}
+
+.pulse-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #86efac;
+  animation: pulse 1.8s ease-out infinite;
+}
+
+/* Nome: entra dal basso, il nome proprio ha un effetto luce che scorre */
+.header-titles .welcome-name {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  margin: 0;
+  font-size: 2rem;
+  font-weight: 800;
+  line-height: 1.1;
+  letter-spacing: -0.5px;
+  animation: fadeUp 0.7s ease 0.15s both;
+}
+
+.wave {
+  display: inline-block;
+  transform-origin: 70% 70%;
+  animation: wave 2.2s ease-in-out 0.8s 2;
+}
+
+.name-first {
+  background: linear-gradient(90deg, #ffffff 0%, #f5d0fe 40%, #ffffff 80%);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+  animation: shimmer 4s linear infinite;
+}
+
+.header-titles .welcome-surname {
+  font-weight: 500;
+  opacity: 0.9;
+}
+
+.header-titles .welcome-subtitle {
+  margin: 0;
+  font-size: 0.85rem;
+  opacity: 0.75;
+  animation: fadeUp 0.7s ease 0.3s both;
+}
+
+/* KEYFRAMES */
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes pulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(134, 239, 172, 0.7);
+  }
+  70% {
+    box-shadow: 0 0 0 8px rgba(134, 239, 172, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(134, 239, 172, 0);
+  }
+}
+
+@keyframes wave {
+  0%, 60%, 100% { transform: rotate(0deg); }
+  10% { transform: rotate(16deg); }
+  20% { transform: rotate(-10deg); }
+  30% { transform: rotate(16deg); }
+  40% { transform: rotate(-6deg); }
+  50% { transform: rotate(10deg); }
+}
+
+@keyframes shimmer {
+  to {
+    background-position: 200% center;
+  }
+}
+
+/* Rispetta chi ha disattivato le animazioni nel sistema */
+@media (prefers-reduced-motion: reduce) {
+  .welcome-label,
+  .welcome-name,
+  .welcome-subtitle,
+  .pulse-dot,
+  .wave,
+  .name-first {
+    animation: none;
+  }
+}
+
+.user-profile {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  cursor: pointer;
+}
+
+.user-info {
+  display: flex;
+  flex-direction: column;
+  text-align: right;
+}
+
+.user-name {
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.user-phone {
+  font-size: 0.75rem;
+  opacity: 0.8;
+}
+
+.user-avatar {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid rgba(255, 255, 255, 0.4);
+}
+
+/* CONTENT BODY (BACKGROUND GRIGIO CHIARO) */
+.content-body {
+  padding: 2rem 2.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.75rem;
+}
+
+.dashboard-card {
+  background-color: #ffffff;
+  border-radius: 20px;
+  padding: 1.75rem 2rem;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
+  position: relative;
+}
+
+.card-header-title {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.card-header-title h3 {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #1e293b;
+  margin: 0;
+}
+
+.badge-icon.purple {
+  background: linear-gradient(270deg, #822FAF, #973AA8);
+  width: 28px;
+  height: 28px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.badge-icon lucide-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 0;
+}
+
+.more-options-btn {
+  position: absolute;
+  top: 1.5rem;
+  right: 1.75rem;
+  background: none;
+  border: none;
+  color: #94a3b8;
+  font-size: 1.1rem;
+  cursor: pointer;
+}
+
+/* CARD SALDO E SLOT CARTE */
+.saldo-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  min-height: 180px;
+}
+
+.card-left {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.saldo-value {
+  font-size: 2rem;
+  font-weight: 800;
+  color: #0f172a;
+}
+
+/* SLOT RISERVATO CARTE */
+.cards-slot-placeholder {
+  flex: 1;
+  max-width: 500px;
+  min-height: 140px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* CARD ULTIMI MOVIMENTI E SLOT TABELLA */
+.movimenti-card {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  min-height: 300px;
+}
+
+.movimenti-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* SLOT RISERVATO MOVIMENTI */
+.movimenti-slot-placeholder {
+  width: 100%;
+  min-height: 200px
+}
+
+.logout-link {
+  cursor: pointer;
+}

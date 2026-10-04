@@ -1,0 +1,364 @@
+<div class="transfer-grid">
+
+  <div class="col-left">
+
+    <form
+      class="card card-bonifico"
+      (ngSubmit)="transfer()">
+
+      <header class="card-head">
+
+        <span
+          class="icon-btn"
+          aria-hidden="true">
+
+          <lucide-icon
+            [img]="ArrowRightLeft"
+            [size]="22"
+            [strokeWidth]="2">
+          </lucide-icon>
+
+        </span>
+
+        <h2>Bonifico</h2>
+
+      </header>
+
+      <div class="form-box">
+
+        <div class="form-grid">
+
+          <div class="field full">
+
+            <label for="iban">
+              IBAN Beneficiario
+            </label>
+
+            <input
+              type="text"
+              id="iban"
+              name="iban"
+              [(ngModel)]="iban"
+              placeholder="IT60 X054 2811 1010 0000 0123 456"
+              required>
+
+          </div>
+
+          <div class="field half">
+
+            <label for="nomeBeneficiario">
+              Nome Beneficiario
+            </label>
+
+            <input
+              type="text"
+              id="nomeBeneficiario"
+              name="nomeBeneficiario"
+              [(ngModel)]="nomeBeneficiario"
+              class="center"
+              placeholder="Nome"
+              required>
+
+          </div>
+
+          <div class="field half">
+
+            <label for="cognomeBeneficiario">
+              Cognome Beneficiario
+            </label>
+
+            <input
+              type="text"
+              id="cognomeBeneficiario"
+              name="cognomeBeneficiario"
+              [(ngModel)]="cognomeBeneficiario"
+              class="center"
+              placeholder="Cognome"
+              required>
+
+          </div>
+
+          <div class="field half">
+
+            <label for="amount">
+              Importo
+            </label>
+
+            <input
+              type="text"
+              id="amount"
+              name="amount"
+              [(ngModel)]="amount"
+              (blur)="formatAmount()"
+              placeholder="Inserisci importo"
+              required>
+
+          </div>
+
+          <div class="field full">
+
+            <label for="causale">
+              Causale
+            </label>
+
+            <input
+              type="text"
+              id="causale"
+              name="causale"
+              [(ngModel)]="causale"
+              placeholder="Inserisci la causale"
+              required>
+
+          </div>
+
+        </div>
+
+      </div>
+
+      @if (message()) {
+
+        <p
+          class="message"
+          [class.success]="success()"
+          [class.error]="!success()">
+
+          {{ message() }}
+
+        </p>
+
+      }
+
+      <div class="form-actions">
+
+        <button
+          type="submit"
+          class="btn-esegui"
+          [disabled]="loading()">
+
+          {{ loading() ? 'INVIO...' : 'ESEGUI' }}
+
+        </button>
+
+      </div>
+
+    </form>
+
+    <section class="card card-saldo">
+
+      <div class="saldo-block">
+
+        <h3 class="block-title">
+          Saldo
+        </h3>
+
+        <div class="calc">
+
+          <p class="calc-current">
+            €&nbsp;{{ saldo() | number:'1.2-2':'it' }}
+          </p>
+
+          <p class="calc-sub">
+            −&nbsp;€&nbsp;{{ importoNumerico | number:'1.2-2':'it' }}
+          </p>
+
+          <div class="calc-divider"></div>
+
+          <hr>
+
+          <p class="calc-total">
+            €&nbsp;{{ saldoDopoOperazione | number:'1.2-2':'it' }}
+          </p>
+
+        </div>
+
+      </div>
+
+      <div class="anteprima-block">
+
+        <h3 class="block-title">
+          Anteprima
+        </h3>
+
+        <div class="legend">
+
+          <div class="legend-item">
+
+            <span class="dot violet"></span>
+
+            <span>
+              Saldo Rimanente
+            </span>
+
+          </div>
+
+          <div class="legend-item">
+
+            <span class="dot pink"></span>
+
+            <span>
+              Saldo Attuale
+            </span>
+
+          </div>
+
+        </div>
+
+        <div class="progress">
+
+          <span class="band violet"></span>
+
+          <span class="band pink"></span>
+
+        </div>
+
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="col-right">
+
+    <section class="card card-rubrica">
+
+      <div class="rubrica-head">
+        <h3 class="block-title">
+          Rubrica
+        </h3>
+
+        <button type="button" class="rubrica-add-btn" (click)="toggleAggiungi()">
+          {{ aggiungiAperto() ? 'Chiudi' : '+ Aggiungi' }}
+        </button>
+      </div>
+
+      @if (aggiungiAperto()) {
+        <form class="rubrica-form" (ngSubmit)="aggiungiContatto()">
+          <input type="text" name="cFirstName" [(ngModel)]="nuovoContatto.firstName"
+            placeholder="Nome" required>
+          <input type="text" name="cLastName" [(ngModel)]="nuovoContatto.lastName"
+            placeholder="Cognome" required>
+          <input type="text" name="cIban" [(ngModel)]="nuovoContatto.iban"
+            placeholder="IBAN" required>
+          <button type="submit" [disabled]="!contattoValido">Salva</button>
+        </form>
+      }
+
+      @if (erroreRubrica()) {
+        <p class="rubrica-error">{{ erroreRubrica() }}</p>
+      }
+
+      <table class="rubrica-table">
+
+        <thead>
+
+          <tr>
+
+            <th>
+              Nome
+            </th>
+
+            <th style="text-align: right;">
+              IBAN
+            </th>
+
+            <th></th>
+
+          </tr>
+
+        </thead>
+
+        <tbody>
+
+          @for (contatto of rubrica(); track contatto.id) {
+
+            <tr
+              (click)="selezionaContatto(contatto)"
+              style="cursor: pointer;"
+              title="Clicca per compilare il bonifico">
+
+              <td>
+                {{ contatto.fullName }}
+              </td>
+
+              <td class="iban">
+                {{ contatto.iban }}
+              </td>
+
+              <td style="text-align: right;">
+                <button type="button" class="rubrica-del-btn"
+                  (click)="rimuoviContatto(contatto, $event)"
+                  title="Rimuovi dalla rubrica" aria-label="Rimuovi">&times;</button>
+              </td>
+
+            </tr>
+
+          } @empty {
+
+            <tr>
+              <td colspan="3" class="rubrica-empty">
+                Nessun beneficiario in rubrica.
+              </td>
+            </tr>
+
+          }
+
+        </tbody>
+
+      </table>
+
+    </section>
+
+    <section class="card card-ultimi">
+
+      <h3 class="block-title">
+        Ultimi Bonifici
+      </h3>
+
+      <ul class="transfers-list">
+
+        @for (m of ultimiBonifici(); track m.id) {
+
+          <li class="transfer-item">
+
+            <span
+              class="transfer-icon"
+              [class.received]="m.amount >= 0"
+              [class.sent]="m.amount < 0"
+              aria-hidden="true">
+
+              <lucide-icon
+                [img]="m.amount >= 0 ? ArrowDown : ArrowUp"
+                [size]="18"
+                [strokeWidth]="2">
+              </lucide-icon>
+
+            </span>
+
+            <span class="transfer-name">
+              {{ m.counterparty ?? m.categoryName }}
+            </span>
+
+            <span
+              class="transfer-amount"
+              [class.positive]="m.amount >= 0"
+              [class.negative]="m.amount < 0">
+              {{ m.amount >= 0 ? '+' : '−' }} € {{ (m.amount < 0 ? -m.amount : m.amount) | number:'1.2-2':'it' }}
+            </span>
+
+          </li>
+
+        } @empty {
+
+          <li class="transfer-item">
+            <span class="transfer-name">Nessun movimento recente.</span>
+          </li>
+
+        }
+
+      </ul>
+
+    </section>
+
+  </div>
+
+</div>

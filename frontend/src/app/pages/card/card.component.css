@@ -1,0 +1,544 @@
+:host {
+  display: block;
+  width: 100%;
+}
+
+.card-page {
+  width: 100%;
+  /*padding: 1.5rem 0;*/
+  box-sizing: border-box;
+  font-family: 'Gabarito', sans-serif;
+}
+
+.card-container {
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  gap: 1.75rem;
+  align-items: stretch;
+}
+
+.dashboard-card {
+  background-color: #ffffff;
+  border-radius: 20px;
+  padding: 1.75rem;
+  box-sizing: border-box;
+  box-shadow: 0 8px 24px rgba(15, 23, 42, 0.06);
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.card-badge-title {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+}
+
+.card-badge-title h3 {
+  margin: 0;
+  color: #0f172a;
+  font-size: 1.1rem;
+  font-weight: 700;
+}
+
+.badge-icon {
+  width: 42px;
+  height: 42px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #ffffff;
+}
+
+.badge-icon svg {
+  width: 22px;
+  height: 22px;
+}
+
+.badge-icon.purple {
+  background: linear-gradient(270deg, #822FAF, #973AA8);
+}
+
+.badge-icon lucide-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 0;
+}
+
+.card-item-title {
+  text-align: center;
+  font-weight: 600;
+  font-size: 0.95rem;
+  color: #334155;
+  margin-bottom: 0.5rem;
+}
+
+.carousel-content-wrapper {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.carousel {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+}
+
+.carousel-arrow {
+  flex: 0 0 auto;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: none;
+  background: #f1f5f9;
+  color: #334155;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.carousel-arrow:hover {
+  background: #e2e8f0;
+}
+
+.carousel-viewport {
+  overflow: hidden;
+  width: 280px;
+  margin: 0 auto;
+}
+
+.carousel-track {
+  display: flex;
+  transition: transform 0.35s ease;
+}
+
+.carousel-slide {
+  flex: 0 0 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.carousel-dots {
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.carousel-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  border: none;
+  background: #e2e8f0;
+  cursor: pointer;
+  padding: 0;
+  transition: background 0.2s ease, width 0.2s ease;
+}
+
+.carousel-dot.active {
+  background: #8b5cf6;
+  width: 20px;
+  border-radius: 4px;
+}
+
+.card-scene {
+  width: 280px;
+  height: 160px;
+  perspective: 1000px;
+  cursor: pointer;
+}
+
+.credit-card {
+  position: relative;
+  width: 280px;
+  height: 160px;
+  transform-style: preserve-3d;
+  transition: transform 0.7s ease;
+  border-radius: 16px;
+}
+
+.credit-card.flipped {
+  transform: rotateY(180deg);
+}
+
+.card-face {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+  border-radius: 16px;
+  backface-visibility: hidden;
+  overflow: hidden;
+  transform: translate3d(0, 0, 1px);
+  background: linear-gradient(135deg, #1e293b, #0f172a);
+  color: #ffffff;
+  box-shadow: none;
+
+  padding: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.credit-card.virtuale .card-face {
+  background: linear-gradient(135deg, #4f46e5, #312e81);
+}
+
+.credit-card.usa-e-getta .card-face {
+  background: linear-gradient(135deg, #7c3aed, #4c1d95);
+  border: 1px dashed rgba(255, 255, 255, 0.35);
+}
+
+.card-front {
+  transform: rotateY(0deg);
+}
+
+.digital-card-tipo {
+  font-size: 0.7rem;
+  letter-spacing: 1px;
+  opacity: 0.75;
+}
+
+.card-number {
+  font-family: monospace;
+  font-size: 1.1rem;
+  letter-spacing: 2px;
+}
+
+.card-footer-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  padding-bottom: 1.6rem;
+}
+
+.card-holder {
+  font-size: 0.75rem;
+  opacity: 0.8;
+  text-transform: uppercase;
+}
+
+.card-scadenza {
+  font-size: 0.75rem;
+  opacity: 0.8;
+  font-family: monospace;
+}
+
+.tap-hint {
+  position: absolute;
+  left: 1.25rem;
+  bottom: 1.1rem;
+  font-size: 0.6rem;
+  opacity: 0.6;
+}
+
+.card-back {
+  transform: rotateY(180deg);
+  justify-content: flex-start;
+  gap: 0.75rem;
+}
+
+.back-label {
+  font-size: 0.65rem;
+  opacity: 0.6;
+  letter-spacing: 1px;
+}
+
+.full-card-number {
+  font-family: monospace;
+  font-size: 1.05rem;
+  letter-spacing: 1.5px;
+}
+
+.back-hint {
+  font-size: 0.6rem;
+  opacity: 0.5;
+  margin-top: auto;
+}
+
+.mastercard-logo {
+  position: absolute;
+  right: 1.1rem;
+  bottom: 1rem;
+}
+
+.card-actions {
+  display: flex;
+  gap: 0.75rem;
+  margin-top: 1rem;
+}
+
+.action-button {
+  border: none;
+  border-radius: 9px;
+  padding: 0.65rem 1rem;
+  font-family: inherit;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.45rem;
+  transition: 0.2s ease;
+  flex: 1;
+}
+
+.action-button svg {
+  width: 17px;
+  height: 17px;
+}
+
+.block-button {
+  background: #f1f5f9;
+  color: #334155;
+}
+
+.block-button:hover {
+  background: #e2e8f0;
+}
+
+.delete-button {
+  background: #dc2626;
+  color: #ffffff;
+}
+
+.delete-button:hover {
+  background: #b91c1c;
+}
+
+.regen-button {
+  background: #eef2ff;
+  color: #4338ca;
+}
+
+.regen-button:hover {
+  background: #e0e7ff;
+}
+
+.details-section {
+  justify-content: flex-start;
+}
+
+.section-title {
+  margin-bottom: 1.25rem;
+}
+
+.section-title h3 {
+  margin: 0;
+  color: #0f172a;
+  font-size: 1.1rem;
+  font-weight: 700;
+}
+
+.details-list {
+  display: flex;
+  flex-direction: column;
+}
+
+.detail-row {
+  min-height: 55px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  border-bottom: 1px solid #f1f5f9;
+}
+
+.detail-row:last-child {
+  border-bottom: none;
+}
+
+.detail-label span {
+  color: #64748b;
+  font-size: 0.85rem;
+}
+
+.detail-row strong {
+  color: #0f172a;
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-align: right;
+}
+
+.cvv-container {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.eye-button {
+  border: none;
+  background: transparent;
+  padding: 0.2rem;
+  color: #64748b;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 4px;
+  transition: color 0.2s ease, background-color 0.2s ease;
+}
+
+.eye-button:hover {
+  color: #0f172a;
+  background-color: #f1f5f9;
+}
+
+.eye-button lucide-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 0;
+}
+
+.security-info {
+  margin-top: auto;
+  padding: 0.9rem;
+  border-radius: 10px;
+  background: #f8fafc;
+  color: #64748b;
+  font-size: 0.75rem;
+  line-height: 1.4;
+}
+
+@media (max-width: 900px) {
+  .card-container {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 600px) {
+  .dashboard-card {
+    padding: 1.25rem;
+  }
+
+  .carousel-viewport,
+  .card-scene,
+  .credit-card {
+    width: 100%;
+    max-width: 280px;
+  }
+
+  .card-actions {
+    flex-direction: column;
+  }
+}
+.cards-state {
+  padding: 28px 12px;
+  font-size: 0.9rem;
+  color: #64748b;
+  text-align: center;
+}
+
+.cards-state-error {
+  color: #dc2626;
+}
+
+.credit-card.blocked {
+  filter: grayscale(0.7);
+  opacity: 0.75;
+}
+
+.new-card-button {
+  margin-left: auto;
+  padding: 6px 12px;
+  border: 1px solid #c4b5fd;
+  border-radius: 8px;
+  background: #f5f3ff;
+  color: #6d28d9;
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.new-card-button:hover {
+  background: #ede9fe;
+}
+
+.new-card-panel {
+  margin: 12px 0 4px;
+  padding: 16px;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  background: #f8fafc;
+}
+
+.new-card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 12px;
+}
+
+.new-card-field {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-size: 0.78rem;
+  color: #475569;
+}
+
+.new-card-field input,
+.new-card-field select {
+  padding: 8px 10px;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  font-size: 0.85rem;
+  background: #ffffff;
+}
+
+.new-card-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  margin-top: 14px;
+}
+
+.new-card-error {
+  margin: 10px 0 0;
+  font-size: 0.8rem;
+  color: #dc2626;
+}
+
+.new-card-note {
+  margin: 0 0 10px;
+  font-size: 0.82rem;
+  line-height: 1.5;
+  color: #475569;
+}
+
+.new-card-secret {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 12px;
+  border-radius: 10px;
+  background: #ffffff;
+  border: 1px dashed #c4b5fd;
+}
+
+.new-card-number {
+  font-family: ui-monospace, monospace;
+  font-size: 1.05rem;
+  letter-spacing: 2px;
+  color: #1e293b;
+}
+
+.new-card-cvv {
+  font-size: 0.85rem;
+  color: #6d28d9;
+  font-weight: 600;
+}

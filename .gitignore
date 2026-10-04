@@ -1,0 +1,24 @@
+# Dipendenze
+node_modules/
+
+# Build
+dist/
+.angular/
+/out-tsc/
+
+# Variabili d'ambiente: contengono credenziali, non vanno mai su GitHub
+.env
+.env.local
+.env.*.local
+!.env.example
+
+# Vercel
+.vercel
+
+# Editor e sistema
+.idea/
+.vscode/*
+!.vscode/settings.json
+.DS_Store
+Thumbs.db
+*.log

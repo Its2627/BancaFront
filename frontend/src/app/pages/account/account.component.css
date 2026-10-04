@@ -1,0 +1,111 @@
+.profile-card {
+  background: #ffffff;
+  border-radius: 20px;
+  padding: 2rem 2.5rem;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
+}
+
+h2 {
+  margin: 0 0 1.75rem;
+  font-size: 1.75rem;
+  color: #1e293b;
+}
+
+/* BLOCCO FOTO + NOME */
+.profile-header {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  padding-bottom: 1.75rem;
+  margin-bottom: 1.75rem;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.avatar {
+  width: 96px;
+  height: 96px;
+  border-radius: 50%;
+  object-fit: cover;
+  flex-shrink: 0;
+  border: 4px solid #f3e8ff;
+}
+
+.full-name {
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: #0f172a;
+}
+
+.email {
+  color: #64748b;
+  margin-top: 0.3rem;
+}
+
+/* GRIGLIA DATI */
+.profile-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.5rem 2rem;
+  margin: 0;
+}
+
+.field dt {
+  font-size: 0.8rem;
+  color: #64748b;
+  margin-bottom: 0.4rem;
+}
+
+.field dd {
+  margin: 0;
+  padding: 0.75rem 1rem;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+  font-weight: 500;
+  color: #0f172a;
+  word-break: break-all;
+}
+
+/* STATI */
+.state {
+  text-align: center;
+  color: #64748b;
+  padding: 2rem 0;
+}
+
+.state-error {
+  background: #fef2f2;
+  color: #dc2626;
+  border-radius: 10px;
+  padding: 0.9rem 1rem;
+  text-align: left;
+}
+
+.profile-actions {
+  margin-top: 2rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid #e2e8f0;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.btn-change-password {
+  padding: 0.75rem 1.5rem;
+  border-radius: 999px;
+  background: linear-gradient(270deg, #822faf, #973aa8);
+  color: #ffffff;
+  font-weight: 700;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+@media (max-width: 700px) {
+  .profile-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .profile-header {
+    flex-direction: column;
+    text-align: center;
+  }
+}

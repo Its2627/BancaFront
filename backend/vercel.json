@@ -1,0 +1,14 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "buildCommand": "tsc --noEmit",
+  "functions": {
+    "api/index.ts": {
+      "maxDuration": 30,
+      "memory": 1024,
+      "excludeFiles": "node_modules/geoip-lite/data/**"
+    }
+  },
+  "rewrites": [
+    { "source": "/(.*)", "destination": "/api" }
+  ]
+}

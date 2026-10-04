@@ -1,0 +1,200 @@
+.page {
+  background-color: #ffffff;
+  height: 100vh;
+  width: 100vw;
+  overflow-x: hidden;
+  overflow-y: hidden;
+  display: flex;
+  flex-direction: column;
+  font-family: 'Gabarito', system-ui, -apple-system, sans-serif;
+  box-sizing: border-box;
+  transition: filter 0.3s ease;
+}
+
+.page.blurred {
+  filter: blur(8px);
+  pointer-events: none; /* Impedisce di cliccare sugli elementi di sfondo */
+}
+
+/* Header Viola */
+.header {
+  background: linear-gradient(90deg, #822FAF, #973AA8); /* Tinta viola di sfondo */
+  height: 15vh;
+  padding: 0 3rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  color: #ffffff;
+}
+
+.logo-container {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  cursor: pointer;
+}
+
+/* Sezione Hero / Banner centrale */
+.hero {
+  background: linear-gradient(135deg, #7b2cbf 0%, #d85c8a 50%, #f7dfe6 100%);
+  display: flex;
+  align-items: center;
+  padding: 0 0 0 5rem;
+  color: #ffffff;
+  font-family: 'Gabarito', sans-serif;
+  height: 45vh;
+  min-height: 350px;
+  overflow: hidden;
+  position: relative; /* Permette il posizionamento assoluto degli elementi figli */
+}
+
+.hero-content {
+  position: relative;
+  z-index: 2; /* Sta sopra all'immagine e alla sfumatura */
+  max-width: 70%; /* Ampiezza del testo che ora può estendersi sopra l'immagine */
+  text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.5); /* Aggiunge un'ombra al testo per migliorare la leggibilità */
+}
+
+.hero-title {
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin-top: 0;
+  margin-bottom: 1rem;
+  line-height: 1.2;
+}
+
+.hero-subtitle {
+  font-size: 1.1rem;
+  font-weight: 400;
+  opacity: 0.9;
+  line-height: 1.5;
+  margin: 0;
+}
+
+.hero-image-container {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 60%; /* Puoi aumentare o diminuire la larghezza dell'immagine */
+  height: 100%;
+  overflow: hidden;
+  z-index: 1; /* Sta sotto al testo */
+}
+
+.hero-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+  -webkit-mask-image: linear-gradient(to right, transparent 0%, black 50%);
+  mask-image: linear-gradient(to right, transparent 0%, black 50%);
+}
+
+/* Barra decorativa con segmento attivo */
+.divider-bar {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1.5rem;
+  padding: 2rem 0;
+  background-color: #ffffff;
+}
+
+.bar-segment {
+  width: 120px;
+  height: 3px;
+  background-color: #e2e8f0;
+  border-radius: 2px;
+}
+
+.bar-segment.active {
+  background-color: #7b2cbf;
+  height: 4px;
+}
+
+/* Sezione Card Account Personale */
+.account-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem 2rem 3rem;
+  background-color: #ffffff;
+}
+
+.account-card {
+  background: linear-gradient(90deg, #d85c8a 0%, #e88ab1 100%);
+  width: 100%;
+  max-width: 500px;
+  padding: 1.25rem 2rem;
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-shadow: 0 4px 15px rgba(216, 92, 138, 0.2);
+  margin-bottom: 2rem;
+}
+
+.account-title {
+  color: #ffffff;
+  font-size: 1.25rem;
+  font-weight: 600;
+}
+
+.btn-accedi {
+  background-color: #ffffff;
+  color: #1e293b;
+  font-weight: 600;
+  font-size: 0.9rem;
+  padding: 0.6rem 1.8rem;
+  border-radius: 20px;
+  text-decoration: none;
+  transition: transform 0.15rem ease, box-shadow 0.15s ease;
+  cursor: pointer;
+}
+
+.btn-accedi:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Footer Link Registrati */
+.register-footer {
+  font-size: 0.85rem;
+  color: #475569;
+}
+
+.register-footer a {
+  color: #3b82f6;
+  text-decoration: underline;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+/* OVERLAY SFONDO SCURO/TRASPARENTE */
+.modal-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.2);
+  z-index: 999;
+}
+
+/* CONTAINER CENTRATO PER LA MODAL */
+.login-modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 90%;
+  max-width: 420px;
+  background-color: #ffffff;
+  border-radius: 24px;
+  padding: 2.5rem 2rem;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.25);
+  z-index: 1000;
+  box-sizing: border-box;
+}

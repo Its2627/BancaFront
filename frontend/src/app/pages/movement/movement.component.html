@@ -1,0 +1,146 @@
+<div class="page">
+  <div class="search-card">
+    <h2 class="form-title">Movimenti</h2>
+
+    <div class="filters">
+      <!-- Ultimi Movimenti -->
+      <div class="form-group">
+        <label class="form-label" for="numberOfMovements">Ultimi movimenti</label>
+        <input
+          id="numberOfMovements"
+          class="form-control"
+          type="number"
+          min="1"
+          [value]="numberOfMovements()"
+          (change)="onNumberOfMovementsChange($any($event.target).value)"
+        >
+      </div>
+
+      <!-- Categoria (CUSTOM DROPDOWN) -->
+      <div class="form-group">
+        <label class="form-label">Categoria</label>
+        <div class="custom-select-wrapper" (click)="toggleDropdown()" [class.open]="isDropdownOpen()">
+          
+          <!-- Header visibile -->
+          <div class="custom-select-trigger">
+            <span [class.placeholder]="!selectedCategory()">
+              {{ selectedCategory() || 'Tutte le categorie' }}
+            </span>
+            <lucide-icon class="select-icon" [img]="ChevronDown" [size]="18" color="#64748b"></lucide-icon>
+          </div>
+
+          <!-- Tendina opzioni -->
+          @if (isDropdownOpen()) {
+            <div class="custom-options">
+              <!-- Opzione predefinita "Tutte le categorie" -->
+              <div 
+                class="custom-option" 
+                [class.selected]="selectedCategory() === ''" 
+                (click)="selectCategory('', $event)">
+                Tutte le categorie
+              </div>
+
+              <!-- Lista categorie -->
+              @for (cat of availableCategories(); track cat) {
+                <div 
+                  class="custom-option" 
+                  [class.selected]="selectedCategory() === cat" 
+                  (click)="selectCategory(cat, $event)">
+                  {{ cat }}
+                </div>
+              }
+            </div>
+          }
+        </div>
+      </div>
+
+      <!-- Data Inizio -->
+      <div class="form-group">
+        <label class="form-label" for="startDate">Data inizio</label>
+        <input
+          id="startDate"
+          class="form-control"
+          type="date"
+          [value]="startDate()"
+          (change)="onStartDateChange($any($event.target).value)"
+        >
+      </div>
+
+      <!-- Data Fine -->
+      <div class="form-group">
+        <label class="form-label" for="endDate">Data fine</label>
+        <input
+          id="endDate"
+          class="form-control"
+          type="date"
+          [value]="endDate()"
+          (change)="onEndDateChange($any($event.target).value)"
+        >
+      </div>
+    </div>
+
+    @if (errorMessage()) {
+      <div class="text-danger">
+        {{ errorMessage() }}
+      </div>
+    }
+
+    @if (finalBalance() !== null) {
+      <div class="balance">
+        Saldo finale: <strong>{{ finalBalance() | number:'1.2-2' }} €</strong>
+      </div>
+    }
+
+    @if (loading()) {
+      <p class="loading">Caricamento...</p>
+    } @else {
+      @if (movements().length) {
+        <table>
+          <thead>
+            <tr>
+              <th>Data</th>
+              <th>Importo</th>
+              <th>Categoria</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (m of movements(); track $index) {
+              <tr>
+                <td>{{ m.date | date:'dd/MM/yyyy' }}</td>
+                <td [class.negative]="m.amount < 0" [class.positive]="m.amount >= 0">
+                  {{ m.amount | number:'1.2-2' }} €
+                </td>
+                <td>{{ m.categoryName }}</td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      } @else {
+        <p class="no-results">Nessun movimento trovato per i filtri selezionati.</p>
+      }
+    }
+
+    <div class="form-actions">
+      <div class="export-dropdown">
+        <button
+          type="button"
+          class="btn-submit"
+          (click)="toggleExportMenu()"
+          [disabled]="!movements().length">
+          Esporta
+        </button>
+
+        @if (exportMenuOpen()) {
+          <div class="export-menu">
+            <button type="button" class="export-menu-item" (click)="exportCsvAndClose()">
+              Esporta CSV
+            </button>
+            <button type="button" class="export-menu-item" (click)="exportExcelAndClose()">
+              Esporta Excel
+            </button>
+          </div>
+        }
+      </div>
+    </div>
+  </div>
+</div>

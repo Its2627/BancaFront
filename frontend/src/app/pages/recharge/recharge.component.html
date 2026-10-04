@@ -1,0 +1,159 @@
+<div class="recharge-page-grid">
+
+  <div class="left-column">
+
+    <div class="dashboard-card">
+      <div class="card-header-title">
+        <span class="badge-icon purple">
+          <lucide-icon [img]="Smartphone" [size]="22" color="#ffffff"></lucide-icon>
+        </span>
+        <h3>Pagamenti</h3>
+      </div>
+
+      <h2 class="form-title">Ricarica</h2>
+
+      <form (ngSubmit)="recharge()">
+        <div class="form-row">
+          <div class="form-group">
+            <label for="phone">Numero Telefonico</label>
+            <input type="tel" id="phone" name="phone" [(ngModel)]="phoneNumber" placeholder="Inserisci Numero" required>
+          </div>
+
+          <div class="form-group">
+            <label>Operatore</label>
+            <div class="custom-select-wrapper" (click)="toggleDropdown()" [class.open]="isDropdownOpen">
+
+              <div class="custom-select-trigger">
+                <span [class.placeholder]="!operator">
+                  {{ operator || 'Inserisci Operatore' }}
+                </span>
+                <lucide-icon class="select-icon" [img]="ChevronDown" [size]="18" color="#64748b"></lucide-icon>
+              </div>
+
+              @if (isDropdownOpen) {
+              <div class="custom-options">
+                @for (op of operatorList(); track op) {
+                <div class="custom-option" [class.selected]="operator === op" (click)="selectOperator(op, $event)">
+                  {{ op }}
+                </div>
+                }
+              </div>
+              }
+            </div>
+          </div>
+        </div>
+
+        <div class="amounts-wrapper">
+          <label>Importo</label>
+          <div class="amounts">
+            @for (amount of rechargeAmounts; track amount) {
+            <button type="button" class="amount-btn" [class.selected]="selectedAmount === amount"
+              (click)="selectAmount(amount)">
+              € {{ amount }},00
+            </button>
+            }
+          </div>
+        </div>
+
+        <div class="submit-container">
+          <button type="submit" class="submit-button" [disabled]="loading()">
+            {{ loading() ? 'IN CORSO...' : 'ESEGUI' }}
+          </button>
+        </div>
+
+        @if (message()) {
+        <p [class.success]="success()" [class.error]="!success()" class="message">
+          {{ message() }}
+        </p>
+        }
+      </form>
+    </div>
+
+    <div class="dashboard-card">
+      <div class="card-header-title">
+        <span class="badge-icon purple">
+          <lucide-icon [img]="ChartColumn" [size]="22" color="#ffffff"></lucide-icon>
+        </span>
+        <h3>Analytics</h3>
+      </div>
+
+      <div class="analytics-layout">
+        <div class="stats-column">
+          <div class="stat-box">
+            <span class="stat-label">Operatore più usato</span>
+            <div class="stat-value">{{ analytics()?.operatorePiuUsato || '-' }}</div>
+          </div>
+          <div class="stat-box">
+            <span class="stat-label">Totale Speso</span>
+            <div class="stat-value">€ {{ analytics()?.totaleSpeso?.toFixed(2) || '0,00' }}</div>
+          </div>
+          <div class="stat-box">
+            <span class="stat-label">Ricariche Effettuate</span>
+            <div class="stat-value">{{ analytics()?.ricaricheEffettuate || 0 }}</div>
+          </div>
+        </div>
+
+        <div class="chart-container">
+          <canvas #chartCanvas></canvas>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="right-column">
+
+    <div class="dashboard-card">
+      <h3>Rubrica</h3>
+      <br>
+      <table class="side-table">
+        <thead>
+          <tr>
+            <th>Operatore</th>
+            <th>Telefono</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (item of rubrica(); track item.telefono) {
+          <tr (click)="selezionaDallaRubrica(item.telefono, item.operatore)"
+              style="cursor: pointer;" title="Clicca per compilare la ricarica">
+            <td>{{ item.operatore }}</td>
+            <td>{{ item.telefono }}</td>
+          </tr>
+          } @empty {
+          <tr>
+            <td colspan="2">Nessun contatto trovato</td>
+          </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+
+    <div class="dashboard-card">
+      <h3>Ultime Ricariche</h3>
+      <br>
+      <table class="side-table">
+        <thead>
+          <tr>
+            <th>N. Telefono</th>
+            <th style="text-align: right;">Importo</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (ricarica of ultimeRicariche(); track $index) {
+          <tr>
+            <td>{{ ricarica.telefono }}</td>
+            <td class="amount-col">-€ {{ ricarica.importo.toFixed(2) }}</td>
+          </tr>
+          } @empty {
+          <tr>
+            <td colspan="2">Nessuna ricarica recente</td>
+          </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+
+  </div>
+
+</div>

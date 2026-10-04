@@ -1,0 +1,102 @@
+<div class="detail-page">
+
+  <section class="dashboard-card">
+
+    <div class="card-badge-title">
+      <div class="badge-icon purple">
+        <lucide-icon [img]="ReceiptText" [size]="20" color="#ffffff"></lucide-icon>
+      </div>
+      <h3>Dettaglio movimento</h3>
+
+      <button type="button" class="back-button" (click)="indietro()">
+        <lucide-icon [img]="ArrowLeft" [size]="16" [strokeWidth]="2"></lucide-icon>
+        <span>Torna alla home</span>
+      </button>
+    </div>
+
+    @if (loading()) {
+      <p class="detail-state">Caricamento movimento...</p>
+    } @else if (errorMessage()) {
+      <p class="detail-state detail-state-error">{{ errorMessage() }}</p>
+    } @else if (movimento(); as m) {
+
+      <div class="detail-amount" [class.positive]="importoFirmato() >= 0">
+        {{ importoFirmato() >= 0 ? '+' : '−' }} &euro;
+        {{ (importoFirmato() < 0 ? -importoFirmato() : importoFirmato()) | number:'1.2-2':'it' }}
+      </div>
+
+      <dl class="detail-grid">
+
+        <div class="detail-field">
+          <dt>ID movimento</dt>
+          <dd class="mono">{{ m.id }}</dd>
+        </div>
+
+        <div class="detail-field">
+          <dt>ID conto corrente</dt>
+          <dd class="mono">{{ m.bankAccount }}</dd>
+        </div>
+
+        <div class="detail-field">
+          <dt>Data</dt>
+          <dd>{{ m.date | date:'dd/MM/yyyy HH:mm' }}</dd>
+        </div>
+
+        <div class="detail-field">
+          <dt>Importo</dt>
+          <dd>&euro; {{ m.amountEuro | number:'1.2-2':'it' }}</dd>
+        </div>
+
+        <div class="detail-field">
+          <dt>Tipologia</dt>
+          <dd>{{ direzioneLabel() }}</dd>
+        </div>
+
+        <div class="detail-field">
+          <dt>Tipo operazione</dt>
+          <dd>{{ tipoLabel() }}</dd>
+        </div>
+
+        <div class="detail-field">
+          <dt>Saldo dopo l'operazione</dt>
+          <dd>&euro; {{ m.balanceAfterEuro | number:'1.2-2':'it' }}</dd>
+        </div>
+
+        <div class="detail-field">
+          <dt>Categoria</dt>
+          <dd>{{ m.category.categoryName }}</dd>
+        </div>
+
+        <div class="detail-field">
+          <dt>ID categoria</dt>
+          <dd class="mono">{{ m.category.id }}</dd>
+        </div>
+
+        <div class="detail-field">
+          <dt>Stato</dt>
+          <dd>{{ statoLabel() }}</dd>
+        </div>
+
+        <div class="detail-field detail-field-wide">
+          <dt>Descrizione estesa</dt>
+          <dd>{{ m.paymentReference }}</dd>
+        </div>
+
+        @if (controparte(); as c) {
+          <div class="detail-field">
+            <dt>Controparte</dt>
+            <dd>{{ c.nome ?? '—' }}</dd>
+          </div>
+
+          <div class="detail-field">
+            <dt>IBAN controparte</dt>
+            <dd class="mono">{{ c.iban ?? '—' }}</dd>
+          </div>
+        }
+
+      </dl>
+    }
+
+  </section>
+
+</div>
