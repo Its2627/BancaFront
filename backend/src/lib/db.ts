@@ -30,7 +30,8 @@ mongoose.set('debug', process.env.NODE_ENV !== 'production');
 
 export const connectDb = () => mongoose.connect(process.env.MONGO_URI ?? DEFAULT_URI, {
     maxPoolSize: 5,
-    serverSelectionTimeoutMS: 15000
+    serverSelectionTimeoutMS: 15000,
+    bufferCommands: false
 });
 
 let transactionsSupported: boolean | null = null;
