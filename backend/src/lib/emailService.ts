@@ -11,12 +11,37 @@ const transporter = nodemailer.createTransport({
     }
 });
 
+const DEFAULT_FRONTEND_URL = 'https://banca-frontend.vercel.app';
+const DEFAULT_BACKEND_URL = 'https://banca-backend.vercel.app/api';
+
+const DOMINI_NON_VALIDI = ['banca-fe.vercel.app', 'banca-be.vercel.app'];
+
+const normalizza = (valore: string | undefined, predefinito: string): string => {
+    const pulito = (valore ?? '').trim().replace(/\/+$/, '');
+
+    if (!pulito || DOMINI_NON_VALIDI.some(dominio => pulito.includes(dominio))) {
+        return predefinito.replace(/\/+$/, '');
+    }
+
+    return pulito;
+};
+
+const frontendBaseUrl = (): string =>
+    normalizza(process.env.FRONTEND_URL, process.env.NODE_ENV === 'production'
+        ? DEFAULT_FRONTEND_URL
+        : 'http://localhost:4200');
+
+const backendBaseUrl = (): string =>
+    normalizza(process.env.BACKEND_URL, process.env.NODE_ENV === 'production'
+        ? DEFAULT_BACKEND_URL
+        : 'http://localhost:3000/api');
+
 export async function sendVerificationEmail(
     email: string,
     token: string
 ) {
 
-    const baseUrl = (process.env.BACKEND_URL ?? '').replace(/\/+$/, '');
+    const baseUrl = backendBaseUrl();
     const verificationUrl = `${baseUrl}/auth/verify-email?token=${token}`;
 
     await transporter.sendMail({
@@ -51,7 +76,7 @@ export async function sendPasswordResetEmail(
     token: string
 ) {
 
-    const baseUrl = (process.env.FRONTEND_URL ?? 'http://localhost:4200').replace(/\/+$/, '');
+    const baseUrl = frontendBaseUrl();
     const resetUrl = `${baseUrl}/landing/reset-password?token=${token}`;
 
     await transporter.sendMail({
