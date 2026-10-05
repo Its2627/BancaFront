@@ -1,3 +1,4 @@
+import { AvatarComponent } from '../../components/avatar/avatar.component';
 import { Component, inject } from '@angular/core';
 import { Router, RouterLink, RouterOutlet, RouterLinkActive } from '@angular/router';
 import { LucideAngularModule, Landmark, CreditCard, ArrowRightLeft, IdCard, ReceiptText, Settings, LogOut, Smartphone } from 'lucide-angular';
@@ -5,7 +6,7 @@ import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-home.component',
-  imports: [RouterLink, RouterOutlet, RouterLinkActive, LucideAngularModule],
+  imports: [RouterLink, RouterOutlet, RouterLinkActive, LucideAngularModule, AvatarComponent],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css',
 })

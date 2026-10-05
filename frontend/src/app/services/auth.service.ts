@@ -12,7 +12,7 @@ export interface RegisterPayload {
   email: string;
   password: string;
     birthDate: string;
-    picture: string;
+    picture?: string;
 }
 
 @Injectable({

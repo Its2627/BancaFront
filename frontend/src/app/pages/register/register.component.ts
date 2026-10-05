@@ -6,8 +6,6 @@ import { AuthService } from '../../services/auth.service';
 
 const PASSWORD_PATTERN = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^A-Za-z0-9]).{8,}$/;
 
-const DEFAULT_PICTURE = 'https://picsum.photos/200/200';
-
 const MIN_AGE = 18;
 
 function maxBirthDate(): string {
@@ -80,8 +78,7 @@ export class RegisterComponent {
       lastName: cognome!,
       email: email!,
       password: password!,
-      birthDate: birthDate!,
-      picture: DEFAULT_PICTURE
+      birthDate: birthDate!
     }).subscribe({
       next: () => {
         this.submitting.set(false);

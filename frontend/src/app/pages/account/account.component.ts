@@ -1,3 +1,4 @@
+import { AvatarComponent } from '../../components/avatar/avatar.component';
 import { Component, computed, inject, OnInit, signal } from '@angular/core';
 import { DatePipe, DecimalPipe } from '@angular/common';
 import { RouterLink, RouterOutlet } from '@angular/router';
@@ -6,7 +7,7 @@ import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-account',
-  imports: [DatePipe, DecimalPipe, RouterLink, RouterOutlet],
+  imports: [DatePipe, DecimalPipe, RouterLink, RouterOutlet, AvatarComponent],
   templateUrl: './account.component.html',
   styleUrl: './account.component.css',
 })

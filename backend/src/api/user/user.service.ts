@@ -190,11 +190,15 @@ export class UserService {
 
     async updatePicture(
         userId: Types.ObjectId | string,
-        picture: string): Promise<HydratedDocument<User> | null> {
+        picture?: string): Promise<HydratedDocument<User> | null> {
+
+        const update = picture
+            ? { $set: { picture } }
+            : { $unset: { picture: '' } };
 
         return await UserModel.findByIdAndUpdate(
             userId,
-            { picture },
+            update,
             { new: true, runValidators: true }
         );
     }

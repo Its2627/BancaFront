@@ -1,0 +1,11 @@
+@if (mostraImmagine()) {
+  <img
+    class="avatar-image"
+    [src]="immagine()"
+    [alt]="nomeCompleto() || 'Immagine del profilo'"
+    (error)="onErroreImmagine()">
+} @else {
+  <span class="avatar-initials" [attr.aria-label]="nomeCompleto() || 'Profilo'">
+    {{ iniziali() }}
+  </span>
+}

@@ -1,0 +1,34 @@
+:host {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #973aa8, #d85c8a);
+  color: #ffffff;
+  font-family: 'Gabarito', sans-serif;
+  font-weight: 700;
+  line-height: 1;
+  text-transform: uppercase;
+  user-select: none;
+  box-sizing: border-box;
+  container-type: size;
+}
+
+.avatar-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.avatar-initials {
+  font-size: 1rem;
+  letter-spacing: 0.02em;
+}
+
+@container (min-width: 0px) {
+  .avatar-initials {
+    font-size: 38cqw;
+  }
+}

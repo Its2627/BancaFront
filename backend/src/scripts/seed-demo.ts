@@ -154,7 +154,6 @@ const createDemoUser = async (demo: DemoUser): Promise<CreatedDemo> => {
         firstName: demo.firstName,
         lastName: demo.lastName,
         birthDate: new Date(demo.birthDate),
-        picture: 'https://picsum.photos/200/200',
     });
 
     await UserIdentityModel.create({

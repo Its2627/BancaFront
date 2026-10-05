@@ -1,4 +1,4 @@
-import { IsDate, IsEmail, IsString, IsUrl, Matches, MaxDate, MinDate } from "class-validator";
+import { IsDate, IsEmail, IsOptional, IsString, IsUrl, Matches, MaxDate, MinDate } from "class-validator";
 import { Transform } from "class-transformer";
 import { dateYearsAgo } from "../../lib/utils";
 
@@ -29,8 +29,9 @@ export class RegisterDto {
   @MinDate(() => dateYearsAgo(MAX_AGE), { message: 'birthDate non e\' una data di nascita plausibile' })
   birthDate: Date;
 
+  @IsOptional()
   @IsUrl()
-  picture: string;
+  picture?: string;
 
 }
 

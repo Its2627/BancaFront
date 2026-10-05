@@ -21,6 +21,7 @@ import loginAttemptSrv from '../loginAttempts/loginAttempts.service'
 import { UserExistsError } from "../../errors/user-exists.error";
 import operationLogSrv from "../operationLog/operationLog.service";
 import { clientIp, clientUserAgent } from "../../lib/client-ip";
+import { CREDENZIALI_NON_VALIDE } from "../../lib/messages";
 
 export const register = async (
   req: TypedRequest<RegisterDto>,
@@ -75,7 +76,7 @@ export const login = (
           });
 
           if (!user) {
-            return next(new InvalidCredentialsError(info?.message));
+            return next(new InvalidCredentialsError(CREDENZIALI_NON_VALIDE));
           }
 
           if (user.emailVerified === false) {
