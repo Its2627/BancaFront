@@ -101,16 +101,29 @@
               <th>Data</th>
               <th>Importo</th>
               <th>Categoria</th>
+              <th class="col-dettagli"></th>
             </tr>
           </thead>
           <tbody>
-            @for (m of movements(); track $index) {
+            @for (m of movements(); track m.id || $index) {
               <tr>
                 <td>{{ m.date | date:'dd/MM/yyyy' }}</td>
                 <td [class.negative]="m.amount < 0" [class.positive]="m.amount >= 0">
                   {{ m.amount | number:'1.2-2' }} €
                 </td>
                 <td>{{ m.categoryName }}</td>
+                <td class="col-dettagli">
+                  @if (m.id) {
+                    <button
+                      type="button"
+                      class="btn-dettagli"
+                      [attr.aria-label]="'Dettagli del movimento del ' + (m.date | date:'dd/MM/yyyy')"
+                      (click)="apriDettaglio(m)">
+                      <lucide-icon [img]="ReceiptText" [size]="15" [strokeWidth]="2"></lucide-icon>
+                      <span>Dettagli</span>
+                    </button>
+                  }
+                </td>
               </tr>
             }
           </tbody>

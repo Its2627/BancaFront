@@ -2,7 +2,8 @@ import { Component, OnInit, inject, signal, HostListener } from '@angular/core';
 import { finalize } from 'rxjs';
 import { CommonModule } from '@angular/common';
 import { Movement, MovementService } from '../../services/movement.service';
-import { LucideAngularModule, ChevronDown } from 'lucide-angular';
+import { LucideAngularModule, ChevronDown, ReceiptText } from 'lucide-angular';
+import { Router } from '@angular/router';
 import * as XLSX from 'xlsx';
 
 @Component({
@@ -15,8 +16,10 @@ import * as XLSX from 'xlsx';
 export class MovementComponent implements OnInit {
 
   ChevronDown = ChevronDown;
+  ReceiptText = ReceiptText;
 
   protected movementService = inject(MovementService);
+  private router = inject(Router);
 
   numberOfMovements = signal<number>(10);
   availableCategories = signal<string[]>([]);
@@ -39,6 +42,14 @@ export class MovementComponent implements OnInit {
     });
 
     this.executeSearch();
+  }
+
+  apriDettaglio(m: Movement): void {
+    if (!m.id) {
+      return;
+    }
+
+    this.router.navigate(['/home/dettaglio-movimento', m.id]);
   }
 
   toggleDropdown() {
